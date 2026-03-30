@@ -27,6 +27,9 @@ SongUp is an open-source, privacy-friendly music queue system. Hosts can control
 
 - **2️⃣ Queue Management**
   Hosts can choose how many songs people can add to the queue at once.
+
+- **⏱️ Maximum Song Length (New)**
+  Hosts can define a maximum track length to keep the queue fair and flowing.
   
 - **🎶 Never Silence**
   When creating a room, hosts can choose a fallback playlist that will play when no one has added a song to the queue, while
