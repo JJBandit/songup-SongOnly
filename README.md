@@ -1,3 +1,15 @@
+## 🔧 Fork Information
+
+This project is based on the original SongUp project.
+
+Changes in this fork include:
+- Removal of links to the hosted service (songup.tv)
+- Modifications to limit submissions to 'Add a Song' rather than an extended playlist. (e.g. song length limits)
+- Host controlled Maximum Song Length
+
+This fork is not affiliated with or endorsed by the original SongUp project.
+
+
 # SongUp
 
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://songup.tv/discord)
