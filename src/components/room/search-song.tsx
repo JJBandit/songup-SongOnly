@@ -53,12 +53,15 @@ export function SearchSong({
         try {
             await onSelect(song)
         } catch (error: any) {
-    const message =
+    const rawMessage =
         error?.data?.message ||
         error?.message ||
         "Failed to select song. Please try again."
 
-    setError(message)
+    const cleanedMessageMatch = rawMessage.match(/Uncaught Error:\s*(.*?)(?:\s+at handler|\s+Called by client|$)/)
+    const cleanedMessage = cleanedMessageMatch?.[1] || rawMessage
+
+    setError(cleanedMessage)
 }
     }
 
