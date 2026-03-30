@@ -81,7 +81,7 @@ export function PlaylistPicker({
     function handleSelectPlaylist(playlistId: string) {
         setOpen(false)
         setLoading(true)
-        fetch(fetch(`https://jjjukebox-api.onrender.com/flask/get-playlist?playlistId=${playlistId}`))
+        fetch(`https://jjjukebox-api.onrender.com/flask/get-playlist?playlistId=${playlistId}`))
             .then((res) => res.json())
             .then((data: APIPlaylist) => {
                 onChange(data)
