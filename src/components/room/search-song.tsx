@@ -52,9 +52,14 @@ export function SearchSong({
 
         try {
             await onSelect(song)
-        } catch (error) {
-            setError("Failed to select song. Please try again.")
-        }
+        } catch (error: any) {
+    const message =
+        error?.data?.message ||
+        error?.message ||
+        "Failed to select song. Please try again."
+
+    setError(message)
+}
     }
 
     return (
