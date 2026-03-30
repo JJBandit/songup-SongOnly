@@ -43,6 +43,7 @@ export default defineSchema({
         currentSong: v.optional(v.object(song)),
         settings: v.object({
             maxSongsPerUser: v.number(),
+            maxSongLengthMinutes: v.optional(v.number()),
         }),
     })
         .index("by_code", ["code"])

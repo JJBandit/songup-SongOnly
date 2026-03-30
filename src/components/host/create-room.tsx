@@ -34,9 +34,16 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
     const createCheckout = useAction(api.stripe.createPaymentCheckout)
 
     async function handleCreateRoom(formData: FormData) {
+        const maxSongLengthValue = formData.get("maxSongLengthMinutes") as string
+        const maxSongLengthMinutes =
+            maxSongLengthValue === "unlimited"
+                ? undefined
+                : Number(maxSongLengthValue)
+
         await createRoom({
             pro: formData.get("pro") === "on",
             maxSongsPerUser: Number(formData.get("maxSongsPerUser")),
+            maxSongLengthMinutes,
             fallbackSongs: playlist
                 ? playlist.tracks.map((track) => ({
                       videoId: track.videoId,
@@ -52,6 +59,10 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                 code: data.code,
                 pro,
                 maxSongsPerUser: formData.get("maxSongsPerUser"),
+                maxSongLengthMinutes:
+                    maxSongLengthValue === "unlimited"
+                        ? "unlimited"
+                        : Number(maxSongLengthValue),
                 fallbackPlaylist: playlist && {
                     id: playlist.id,
                     title: playlist.title,
@@ -102,6 +113,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                         <Switch id="pro" name="pro" />
                         <Label htmlFor="pro">Pro room (5€)</Label>
                     </div>
+
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="maxSongsPerUser">
                             Max songs per user
@@ -115,6 +127,25 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                             type="number"
                         />
                     </div>
+
+                    <div className="flex flex-col gap-2">
+                        <Label htmlFor="maxSongLengthMinutes">
+                            Max song length
+                        </Label>
+                        <select
+                            id="maxSongLengthMinutes"
+                            name="maxSongLengthMinutes"
+                            defaultValue="10"
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                        >
+                            <option value="5">5 minutes</option>
+                            <option value="10">10 minutes</option>
+                            <option value="15">15 minutes</option>
+                            <option value="20">20 minutes</option>
+                            <option value="unlimited">Unlimited</option>
+                        </select>
+                    </div>
+
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="fallbackPlaylist">
                             Select a fallback playlist
@@ -126,6 +157,7 @@ export function CreateRoomForm({ children }: { children?: React.ReactNode }) {
                             onChange={setPlaylist}
                         />
                     </div>
+
                     <SubmitButton size="lg" disabled={loading}>
                         Create Room
                     </SubmitButton>

@@ -135,17 +135,20 @@ export const addSong = mutation({
             throw new Error("Room not found")
         }
 
+        // check that song length is shorter than the max song length setting
+        const maxSongLengthMinutes = room.settings.maxSongLengthMinutes
+
+        if (
+            maxSongLengthMinutes !== undefined &&
+            args.duration > maxSongLengthMinutes * 60
+        ) {
+            throw new Error(
+                `This song is too long. The host has restricted song length to a maximum of ${maxSongLengthMinutes} minutes.`,
+            )
+        }
+
         // check that user has still songs left to add
         const userSongs = await ctx.db
-            .query("queuedSongs")
-            .withIndex("by_added_by_room", (q) =>
-                q.eq("addedBy", userId as Id<"users">).eq("room", args.roomId),
-            )
-            .collect()
-
-        if (userSongs.length >= room.settings.maxSongsPerUser) {
-            throw new Error("User has reached the maximum number of songs")
-        }
 
         // Decide whether this song should become the current song or to queue it
         if (!room.currentSong) {

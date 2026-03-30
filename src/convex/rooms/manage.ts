@@ -23,6 +23,7 @@ export const createRoom = mutation({
     args: {
         pro: v.boolean(),
         maxSongsPerUser: v.number(),
+        maxSongLengthMinutes: v.optional(v.number()),
         fallbackSongs: v.optional(
             v.array(
                 v.object({
@@ -66,6 +67,7 @@ export const createRoom = mutation({
             expiresAt: Date.now() + 1000 * 60 * 60 * 48, // 48 hours
             settings: {
                 maxSongsPerUser: args.maxSongsPerUser,
+                maxSongLengthMinutes: args.maxSongLengthMinutes,
             },
         })
 
