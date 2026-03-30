@@ -123,11 +123,12 @@ export default function Room({
                                             disableTrigger={songsLeftToAdd <= 0}
                                         /> */}
                                         <AddSong
-                                            roomId={roomId}
-                                            disabled={
-                                                (songsLeftToAdd ?? 0) <= 0
-                                            }
-                                        />
+												roomId={roomId}
+												disabled={
+													(songsLeftToAdd ?? 0) <= 0
+												}
+												maxSongLengthMinutes={room?.settings?.maxSongLengthMinutes}
+											/>
                                     </>
                                 ) : (
                                     <>{!isLoading && <NicknameForm />}</>

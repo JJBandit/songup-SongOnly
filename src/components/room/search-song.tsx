@@ -1,13 +1,14 @@
 "use client"
 
 import { PlusCircleIcon } from "lucide-react"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { ImageWithFallback } from "../image-with-fallback"
 import { Input } from "../ui/input"
 import { SubmitButton } from "../ui/submit-button"
 
 export function SearchSong({
     onSelect,
+    maxSongLengthMinutes,
 }: {
     onSelect: (song: {
         videoId: string
@@ -15,6 +16,7 @@ export function SearchSong({
         artist: string
         duration: number
     }) => Promise<void>
+    maxSongLengthMinutes?: number
 }) {
     const [results, setResults] = useState<
         {
@@ -53,17 +55,29 @@ export function SearchSong({
         try {
             await onSelect(song)
         } catch (error: any) {
-    const rawMessage =
-        error?.data?.message ||
-        error?.message ||
-        "Failed to select song. Please try again."
+            const rawMessage =
+                error?.data?.message ||
+                error?.message ||
+                "Failed to select song. Please try again."
 
-    const cleanedMessageMatch = rawMessage.match(/Uncaught Error:\s*(.*?)(?:\s+at handler|\s+Called by client|$)/)
-    const cleanedMessage = cleanedMessageMatch?.[1] || rawMessage
+            const cleanedMessageMatch = rawMessage.match(
+                /Uncaught Error:\s*(.*?)(?:\s+at handler|\s+Called by client|$)/,
+            )
+            const cleanedMessage = cleanedMessageMatch?.[1] || rawMessage
 
-    setError(cleanedMessage)
-}
+            setError(cleanedMessage)
+        }
     }
+
+    const filteredResults = useMemo(() => {
+        if (maxSongLengthMinutes === undefined) {
+            return results
+        }
+
+        return results.filter(
+            (song) => song.duration_seconds <= maxSongLengthMinutes * 60,
+        )
+    }, [results, maxSongLengthMinutes])
 
     return (
         <div className="flex flex-col gap-4">
@@ -77,11 +91,19 @@ export function SearchSong({
                     <SubmitButton>Search</SubmitButton>
                 </div>
             </form>
+
+            {maxSongLengthMinutes !== undefined && (
+                <p className="text-center text-sm text-gray-600">
+                    This room allows songs up to {maxSongLengthMinutes} minutes.
+                </p>
+            )}
+
             {error && (
                 <p className="text-center text-sm text-red-500">{error}</p>
             )}
+
             <ul className="flex flex-col gap-2">
-                {results.map((song) => (
+                {filteredResults.map((song) => (
                     <li key={song.videoId}>
                         <form
                             action={handleSelectSong}

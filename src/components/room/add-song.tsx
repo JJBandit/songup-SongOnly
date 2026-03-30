@@ -20,9 +20,11 @@ import { SearchSong } from "./search-song"
 export function AddSong({
     disabled = false,
     roomId,
+    maxSongLengthMinutes,
 }: {
     disabled?: boolean
     roomId: Id<"rooms">
+    maxSongLengthMinutes?: number
 }) {
     const addSong = useMutation(api.rooms.addSong)
     const [open, setOpen] = useState(false)
@@ -64,7 +66,10 @@ export function AddSong({
                 <DialogHeader>
                     <DialogTitle>Add Song</DialogTitle>
                 </DialogHeader>
-                <SearchSong onSelect={handleSelect} />
+                <SearchSong
+                    onSelect={handleSelect}
+                    maxSongLengthMinutes={maxSongLengthMinutes}
+                />
             </DialogContent>
         </Dialog>
     )
