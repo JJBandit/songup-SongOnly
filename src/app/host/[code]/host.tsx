@@ -148,17 +148,7 @@ export default function Host({
                                     }}
                                 />
                             )}
-                            <div className="flex h-full w-full flex-col items-center justify-center gap-2">
-                                <h2 className="text-6xl font-bold">
-                                    songup.tv
-                                </h2>
-                                <p className="text-4xl">
-                                    Enter code{" "}
-                                    <span className="font-extrabold">
-                                        {room?.code}
-                                    </span>
-                                </p>
-                            </div>
+                            
                         </div>
                         <div className="flex w-full flex-col items-center gap-3">
                             <Progress
@@ -186,28 +176,24 @@ export default function Host({
                     <Queue roomId={roomId} />
                     <div className="flex w-full flex-col items-center gap-2 rounded-lg border border-white/20 bg-white/10 p-4 shadow-md backdrop-blur-lg">
                         <h3 className="text-center text-2xl font-bold text-shadow-md">
-                            Scan to add songs...
-                        </h3>
-                        <RoomQRCode roomCode={room?.code ?? ""} />
-                        <p className="text-center text-lg text-white/80 text-shadow-sm">
-                            ...or visit{" "}
-                            <span className="font-bold">songup.tv</span> and
-                            enter code{" "}
-                            <span className="font-bold">{room?.code}</span>
-                        </p>
+								Scan to add songs
+							</h3>
+							<RoomQRCode roomCode={room?.code ?? ""} />
+							<p className="text-center text-lg text-white/80 text-shadow-sm">
+								Scan the QR code with your phone to join
+							</p>
                     </div>
                 </div>
                 <footer className="flex w-full items-center justify-between px-1">
-                    <Link href="/host">
-                        <h2 className="text-3xl font-bold text-white/80">
-                            SongUp
-                            <span className="text-sm text-white/80">.tv</span>
-                        </h2>
-                    </Link>
-                    <p className="text-3xl font-bold text-white/80">
-                        {room?.code}
-                    </p>
-                </footer>
+					<Link href="/host">
+						<h2 className="text-3xl font-bold text-white/80">
+							Powered by SongUp
+						</h2>
+					</Link>
+					<p className="text-3xl font-bold text-white/80">
+						{room?.code}
+					</p>
+				</footer>
             </main>
             {/* This is a hidden component that enables toggling fullscreen by hitting F */}
             <Fullscreen />
