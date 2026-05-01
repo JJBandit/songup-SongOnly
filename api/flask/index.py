@@ -16,8 +16,8 @@ def search():
     # Sort results so that official videos appear first, UGC videos last
     results = sorted(results, key=lambda x: "UGC" in x.get("videoType", ""))
 
-    # Limit to 5 results
-    results = results[:5]
+    # Limit to 10 results
+    results = results[:10]
     return jsonify(results)
 
 @app.route("/flask/get-mood-categories", methods=["GET"])
