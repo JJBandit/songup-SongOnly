@@ -34,8 +34,8 @@ export function SearchSong({
             console.log("Query", query)
             setError(null)
             const results: [] = await fetch(
-                `https://jjjukebox-api.onrender.com/flask/search?query=${encodeURIComponent(query)}`,
-            ).then((res) => res.json())
+    `/flask/search?query=${encodeURIComponent(query)}`,
+).then((res) => res.json())
             console.log("Results", results)
             setResults(results)
         } catch (error) {
