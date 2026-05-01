@@ -102,7 +102,7 @@ export function SearchSong({
                 <p className="text-center text-sm text-red-500">{error}</p>
             )}
 
-            <ul className="flex flex-col gap-2">
+            <ul className="flex max-h-[60vh] flex-col gap-2 overflow-y-auto pr-1">
                 {filteredResults.map((song) => (
                     <li key={song.videoId}>
                         <form
