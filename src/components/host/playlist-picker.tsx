@@ -83,7 +83,7 @@ export function PlaylistPicker({
         setLoading(true)
 
         fetch(
-            `https://jjjukebox-api.onrender.com/flask/get-playlist?playlistId=${playlistId}`,
+            `/flask/get-playlist?playlistId=${encodeURIComponent(playlistId)}`,
         )
             .then((res) => res.json())
             .then((data: APIPlaylist) => {
@@ -112,7 +112,7 @@ export function PlaylistPicker({
     }
 
     useEffect(() => {
-        fetch("https://jjjukebox-api.onrender.com/flask/get-mood-categories")
+        fetch("/flask/get-mood-categories")
             .then((res) => res.json())
             .then((data: Mood[]) => {
                 setMoods(data)
@@ -122,7 +122,7 @@ export function PlaylistPicker({
     useEffect(() => {
         if (selectedMood) {
             fetch(
-                `https://jjjukebox-api.onrender.com/flask/get-mood-playlists?mood_category=${selectedMood.params}`,
+                `/flask/get-mood-playlists?mood_category=${encodeURIComponent(selectedMood.params)}`,
             )
                 .then((res) => res.json())
                 .then((data: MoodPlaylist[]) => {
